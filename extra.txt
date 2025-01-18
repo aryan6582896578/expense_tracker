@@ -1,0 +1,1692 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function onPageLoad() {
+  displayData();
+  console.log("page loaded");
+  displayExpenseList();
+}
+
+function displayExpenseList() {
+  
+  let getExpense = localStorage.getItem("expenseAll");
+  getExpense = JSON.parse(getExpense);
+  getExpense.map((x, index) => {
+    // console.log(x, index);
+
+    const expenseTableBody = document.getElementById("expense_body");
+
+    const create_row = document.createElement("tr");
+    addRows(x.categoryInput, create_row);
+    addRows(x.amountInput, create_row);
+    addRows(x.dateInput, create_row);
+    const buttonRowCell = document.createElement("button");
+    buttonRowCell.innerHTML = "Remove";
+    buttonRowCell.classList.add("table_row_cell");
+    create_row.append(buttonRowCell);
+
+    buttonRowCell.addEventListener("click", () => {
+      create_row.remove();
+      expenseTableBody.innerHTML = "";
+      let something = getExpense;
+      something.splice(index, 1);
+      localStorage.setItem("expenseAll", JSON.stringify(something));
+      onPageLoad();
+    });
+
+    expenseTableBody.append(create_row);
+  });
+}
+
+function addRows(rowCellValue, rowCellGroup) {
+  const createRowCell = document.createElement("td");
+  createRowCell.innerHTML = rowCellValue;
+  createRowCell.classList.add("tablerowcell");
+  rowCellGroup.append(createRowCell);
+}
+
+function setBudget() {
+  const budgetInput = document.getElementById("budgetInput");
+  if (budgetInput.value) {
+    localStorage.setItem("budget", budgetInput.value); // save budget value to local storage
+    resetInput("budgetInput");
+    clearDisplayList()
+    onPageLoad();
+  }
+}
+
+function displayData() {
+  
+  displayBudget = document.getElementById("displayBudget");
+  const budgetValue =localStorage.getItem("budget");
+  displayBudget.innerText = budgetValue;
+
+
+  let getExpense = localStorage.getItem("expenseAll");
+  getExpense = JSON.parse(getExpense);
+  let totalExpenditure = parseInt(0)
+
+  const displayExpenditure= document.getElementById("displayExpenditure")
+  clearDisplayList()
+  getExpense.map((x) => {
+    totalExpenditure += parseInt(x.amountInput)
+    
+  })
+  displayExpenditure.innerText=totalExpenditure || 0
+
+  let displayBalance = document.getElementById("displayBalance")
+  let balanceValue = budgetValue - totalExpenditure
+  displayBalance.innerText = balanceValue
+}
+
+function setExpense() {
+  const categoryInput = document.getElementById("categoryInput");
+  const amountInput = document.getElementById("amountInput");
+  const dateInput = document.getElementById("dateInput");
+
+  if (categoryInput.value && amountInput.value && dateInput.value) {
+    const expenseListData = {
+      categoryInput: categoryInput.value,
+      amountInput: amountInput.value,
+      dateInput: dateInput.value,
+    };
+
+    let expenseListLocalStorage = localStorage.getItem("expenseAll");
+    expenseListLocalStorage = expenseListLocalStorage
+      ? JSON.parse(expenseListLocalStorage)
+      : []; //ternary conditon ? if true use this : if false use this json parse Converts a JavaScript Object Notation (JSON) string into an object.
+    expenseListLocalStorage.push(expenseListData); // add value of expense to the main expense list
+    localStorage.setItem("expenseAll", JSON.stringify(expenseListLocalStorage)); // save expense value to local storage
+
+    resetInput("categoryInput");
+    resetInput("amountInput");
+    resetInput("dateInput");
+
+   clearDisplayList()
+    onPageLoad();
+  }
+}
+
+function resetInput(inputId) {
+  const inputField = document.getElementById(inputId);
+  inputField.value = "";
+}
+
+function clearDisplayList(){
+  const expenseTableBody = document.getElementById("expense_body");
+  expenseTableBody.innerHTML = "";
+  const displayExpenditure= document.getElementById("displayExpenditure")
+  displayExpenditure.innerText = ""
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+  font-family: "roboto";
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  background: #007fd7;
+  border-radius: 100vw;
+  margin-block: 0.2em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #de0606;
+  border-radius: 100vw;
+  margin-block: 0.5em;
+}
+
+*:focus {
+  outline: none;
+}
+input {
+  font-size: 15px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  padding: 4px;
+  min-height: 35px;
+  max-width: 200px;
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: 80%;
+}
+.container {
+  background-image: url("./assets/bg.jpeg");
+  width: 100%;
+  position: absolute;
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -2;
+  text-shadow: 2px 2px #000000;
+}
+
+#title {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: bold;
+  font-family: "comback home";
+}
+
+#web1 {
+  position: absolute;
+  top: -26vh;
+  left: -16vw;
+  z-index: -1;
+}
+
+#web2 {
+  filter: invert(1);
+  position: absolute;
+  top: -17vh;
+  right: -12vw;
+  overflow-x: hidden;
+  z-index: -1;
+}
+
+#web3 {
+  filter: invert(1);
+  position: absolute;
+  z-index: 1;
+  bottom: -8vh;
+  right: 30vw;
+  overflow-x: hidden;
+  z-index: -1;
+}
+
+#spiderman {
+  position: absolute;
+  height: 100vh;
+  top: 0px;
+  left: 3.9vw;
+  z-index: -1;
+}
+
+.wrapper {
+  margin-left: 23vw;
+  margin-top: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.5rem;
+}
+
+.top-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 4%;
+}
+
+.total-budget {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+}
+.budget-name {
+  margin-top: 12px;
+}
+.set-budget {
+  display: flex;
+  flex-direction: column;
+}
+.input-btn1 {
+  padding: 4px;
+  min-height: 30px;
+  max-width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 9px;
+  background-color: #df1f2d;
+  border: transparent;
+  text-align: center;
+  margin: 10px;
+}
+.expense-name {
+  margin: 10px;
+}
+.budget-show {
+  margin: 8px;
+}
+.expenditure {
+  margin: 8px;
+}
+.balance {
+  margin: 8px;
+}
+.budget-display {
+  margin: 10px 10px 10px 0px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.input {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+  height: max-content;
+}
+
+.category-inner {
+  display: flex;
+  flex-direction: column;
+}
+.category-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 10px 10px 10px;
+
+}
+
+.category-input input{
+    margin: 12px;
+}
+
+.category,
+.date,
+.amount {
+  margin: 10px;
+  padding: 5px;
+}
+
+.input-btn {
+    padding: 4px;
+    min-height: 30px;
+    max-width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 9px;
+    background-color: #df1f2d;
+    border: transparent;
+    text-align: center;
+    margin: 10px;
+}
+
+.expense-list {
+  z-index: 100;
+  margin-left: 5vw;
+  padding: 10px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  overflow-y: scroll;
+  max-height: 35vh;
+  overflow-x: hidden;
+  text-shadow: none;
+}
+
+.table {
+  margin: 20px;
+}
+
+.expense-list button {
+  background-color: #1e5ea3;
+  width: 80%;
+  margin: 10px;
+  border: none;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+}
+.expense-list button:hover {
+  background-color: #db2351;
+}
+.expense-list td {
+  padding: 10px;
+  word-wrap: break-word;
+  max-width: 130px;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 10px;
+  overflow: scroll;
+  border-radius: 10px;
+}
+th {
+  border: 1px solid black;
+  margin: 10px;
+  padding: 8px;
+  text-align: left;
+  background-color: #ff2433;
+  color: black;
+  width: 150px;
+  text-align: left;
+}
+
+@media screen and (max-width: 860px) {
+  * {
+    overflow-y: auto;
+  }
+
+  .wrapper {
+    margin-top: -2vh;
+    margin-left: 0vw;
+  }
+
+  .top-wrapper {
+    display: grid;
+    flex-direction: column;
+  }
+
+  .budget-balance {
+    margin-left: 5%;
+  }
+
+  /* .input-btn1{
+        margin-left:10%;
+
+    } */
+
+  .category-wrapper {
+    margin-left: 0;
+  }
+
+  .expense-list {
+    font-size: 1rem;
+    width: 90%;
+    margin: 2%;
+    max-height: 20vh;
+  }
+}
+
+/* *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: monospace;
+    color: white;
+}
+
+body{
+    background-image: url('./assets/bg.jpeg');
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+   
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    
+}
+.wrapper{
+    margin: 20px;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    margin-left: 30vw;
+    padding: 1rem;
+}
+#title{
+    font-size: 4rem;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Comback home';
+}
+
+#spiderman{
+    position: absolute;
+    height: 100vh;
+    top: 0px;
+    left: 3.9vw;
+
+}
+
+#web2{
+    position: absolute;
+    filter: invert(1);
+    top: -15vh;
+    right: -8vw;
+}
+
+#web1{
+    position: absolute;
+    top: -23vh;
+    left: -14.4vw;
+}
+
+input {
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+}
+
+.input{
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.category{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px;
+}
+.amount{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10px;
+}
+.date{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left:18px ;
+}
+
+.expense-date{
+    width: 61%;
+}
+
+
+#input-btn{
+    background-color: #DF1F2D;
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: monospace;
+    padding: 10px;
+    text-align: center;
+    margin: 5px;
+    
+}
+
+
+.expense-list{
+    margin-left: 5vw;
+    margin-top: 20px;
+    padding: 10px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.5);
+    border-radius:10px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    overflow:hidden;
+    
+}
+
+.table{
+    margin: 10px;
+}
+
+table {
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+   background-color: red; 
+   color: black;
+}
+
+tfoot td{
+    font-weight: bold;
+}
+
+.delete-btn{
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link href="https://fonts.cdnfonts.com/css/comback-home" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="./index.js"></script>
+    <title>Expense Calculator || Into The Webverse</title>
+  </head>
+  <body onload=onPageLoad() >
+    <div class="container"> 
+      <p id="title">Expense Tracker</p>
+      <div class="wrapper">
+        <div class="top-wrapper">
+            <div class="budget-balance">
+              
+                <div class="total-budget">
+
+                    <p class="budget-name"  >Budget: </p>
+                    <div class="set-budget">
+                          <input
+                          type="number"
+                          class="expense-name"
+                          placeholder="Enter budget"
+                          id="budgetInput"
+                          />
+                          <button type="submit" class="input-btn1" id="input-btn1" onclick=setBudget()> Enter budget</button>
+                </div>
+              </div>
+
+                <div class="budget-display">
+                    <div class="budget-show">
+                      Budget:
+                      <span id="displayBudget"></span>
+                    </div>
+                    <div class="expenditure">
+                      Expenditure: <span id="displayExpenditure"></span>
+                      <span id="displayExpenditure"></span>
+                    </div>
+
+                    <div class="balance">
+                      Balance:
+                      <span id="displayBalance"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input">
+              <div class="category-wrapper">
+
+                    <div class="category-inner">
+                        <div class="category">
+                              <p>Category: </p>
+                        </div>
+                        <div class="amount">
+                              <p>Amount: </p>
+                        </div>
+                        <div class="date">
+                              <p id="date">Date: </p>
+                        </div>
+                    </div>
+                    <div class="category-input">
+                        <input
+                            type="text"
+                            class="expense-field"
+                            placeholder="Enter name of expense"
+                            id="categoryInput"
+                            class="category"
+                            required
+                            />
+                          <input
+                          type="number"
+                          class="expense-amt-field"
+                          placeholder="Expense amount"
+                          id="amountInput"
+                          class="amount"
+                          required
+                            />
+                          <input
+                          type="date"
+                          class="expense-date-field"
+                          placeholder="expense date"
+                          id="dateInput"
+                          class="date"
+                          required
+                            />
+                            <button type="submit" class="input-btn" id="expenseInput" onclick=setExpense()  > Enter expense</button>
+                    </div>
+              </div>
+                
+                
+                      
+                
+            </div>
+        </div>  
+
+        <div class="expense-list">
+            <h2>&nbsp&nbspExpense List</h2>
+            <div class="table">
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Category</th>
+                          <th>Amount</th>
+                          <th>Date</th>
+                          <th>Delete</th>
+                      </tr>
+                  </thead>
+
+                  <tbody id="expense_body" > 
+
+
+                  </tbody>
+
+                  <!-- <tfoot>
+                      <tr>
+                          <td>Total:</td>
+                          <td id="total-amt"</> <td>
+                          <td></td>
+                      </tr>
+                  </tfoot> -->
+              </table>
+            </div>
+        </div>
+      <!-- </div>
+        <img src="./assets/web.png" alt="web" id="web1" />
+        <img src="./assets/web.png" alt="web" id="web2" />
+        <img src="./assets/web.png" alt="web" id="web3" />
+        <img src="./assets/spiderman.png" alt="spiderman" id="spiderman" />
+    </div> -->
+  </body>
+  <script src="index.js" />
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css" > 
+    <script src="./index.js"></script>
+    <title>Expense Calculator || Into The Webverse</title>
+</head>
+<body onload=onpageload()>
+    Expense Calculator || Into The Webversetest
+    <div >
+
+        <input id="input1" type="number">
+        <button id="button1" onclick=getamount() >add amount</button>
+        <div>
+            current budget <span id="current_budget"></span>
+        </div>
+    </div>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css" > 
+    <script src="./index.js"></script>
+    <title>Expense Calculator || Into The Webverse</title>
+</head>
+<body onload=onpageload()>
+    <div class="wrapper">
+        <div class="container">
+            <
+            <div class="inner-container">
+                <div class="budget">
+                    <h2> Salary/Pocketmoney </h2>
+                    <input type="number" id="total-amt" placeholder="Enter amount" /> 
+                    <button class="submit" id="total-amt-btn" onclick=setbudget() > Set Budget </button>
+                </div>
+
+                <div class="expense">
+                    <h2>Expenses</h2>
+
+                    <input type="text" class="product-name" id="product-name" placeholder="enter type of expense"/>
+                    <input type="number" class="product-amt" id="product-amt" placeholder="enter expense"/>
+                    <button class="submit" id="enter-amt" onclick=setexpense() > Enter Amount</button>
+
+                </div>
+            </div>
+            
+            <div class="budget-container">
+                <div class="">
+                    <p>Total Budget</p>
+                    <span id="bdgt"></span>
+
+                </div>
+                <div class="">
+                    <p>Expenses</p>
+                    <span id="expns">0</span>
+                </div>
+                <div class="">
+                    <p>Balance</p>
+                    <span id="blnc">0</span>
+                </div>
+            
+
+            </div> -->
+            <!-- transaction table -->
+<!--              
+            <div class="list">
+                <h2>Expense list</h2>
+                <div class="list-container" id="list-container"></div>
+            </div>
+
+        </div>
+    </div>
+</body>
+    <script src="index.js"/>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link href="https://fonts.cdnfonts.com/css/comback-home" rel="stylesheet">
+    <script src="./index.js"></script>
+    <title>Expense Calculator || Into The Webverse</title>
+  </head>
+  <body  onload=onpageload()   >
+    <!-- <img src="./assets/web.png" alt="web" id="web1" />
+    <img src="./assets/web.png" alt="web" id="web2" />
+    <img src="./assets/spiderman.png" alt="spiderman" id="spiderman" /> -->
+    <div class="container">
+      <p id="title">Expense Tracker</p>
+      <div class="wrapper">
+        <div class="budget-balance">
+            <div class="total-budget">
+                <p>Budget: </p>
+                <input
+                type="number"
+                class="expense-name"
+                placeholder="Enter budget"
+                id="budget_input"
+                />
+            </div>
+            <button type="submit" class="input-btn1" id="input-btn1" onclick=setbudget()  > Enter budget</button>
+
+
+            <div class="budget-show">
+                Budget:
+                <span id="display_budget"></span>
+            </div>
+            <div class="expenditure">
+                Expenditure:
+                <span id="display_expenditure"></span>
+            </div>
+
+            <div class="balance">
+                Balance:
+                <span id="display_balance"></span>
+            </div>
+        </div>
+
+
+
+
+        <div class="input">
+          <div class="category">
+                <p>Category: </p>
+                <input
+                type="text"
+                class="expense-name"
+                placeholder="Enter name of expense"
+                id="category_input"
+                required
+                />
+            </div>
+            <div class="amount">
+                <p>Amount: </p>
+                <input
+                type="number"
+                class="expense-amt"
+                placeholder="Expense amount"
+                id="amount_input"
+                required
+                />
+            </div>
+
+            <div class="date">
+                <p id="date">Date: </p>
+                <input
+                    type="date"
+                    class="expense-date"
+                    placeholder="expense date"
+                    id="date_input"
+                    required
+                />
+            </div>
+            
+            <button type="submit" id="input-btn" onclick=setexpenselist()  > Enter expense</button>
+      
+          
+        </div>
+
+        <div class="expense-list">
+            <h2>&nbsp&nbspExpense List</h2>
+            <div class="table">
+              <table  >
+                  <thead  >
+                      <tr  >
+                          <th >Category</th>
+                          <th>Amount</th>
+                          <th>Date</th>
+                          <th>Delete</th>
+                      </tr>
+                      
+                  </thead>
+
+                  <tbody  id="expense_body" > 
+
+                    <!-- <tr  id="expense_table">
+                  
+                  </tr> -->
+                  </tbody>
+
+                  <!-- <tfoot>
+                      <tr>
+                          <td>Total:</td>
+                          <td id="total-amt"</> <td>
+                          <td></td>
+                      </tr>
+                  </tfoot> -->
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="index.js" />
+</html>
+
+
+// // console.log("test")
+// // function onpageload(){
+// //     const currentbudgetvalue = localStorage.getItem("budget");
+// //     const spann = document.getElementById("current_budget");
+// //     spann.innerText = currentbudgetvalue;
+// // }
+
+// // function getamount(){
+// //     // const button1 = document.getElementById("button1")
+// //     // const input = document.getElementById("input1")
+// //     // const valueof = input.value;
+// //     // localStorage.setItem("budget",valueof)
+// //     // console.log(valueof)
+// //     const a = ["food","500"]
+// //     localStorage.setItem("budget",a[0])
+// // }
+
+
+
+// function onpageload(){
+//     const get_display_budget = document.getElementById("bdgt")
+//     const get_display_expense = document.getElementById("expns")
+//     const get_display_balance = document.getElementById("blnc")
+    
+//     const display_budget = localStorage.getItem("total-budget")
+//     const display_expense = localStorage.getItem("all-expense")
+//     const display_balance = localStorage.getItem("balance")
+    
+    
+//     get_display_budget.innerText=display_budget
+//     get_display_expense.innerText=display_expense
+//     get_display_balance.innerText=display_balance
+    
+    
+//     // const aa = display_expense.split("||")
+//     // console.log(aa)
+//     // const somearr = []
+//     // aa.map((x)=>somearr.push(x))
+//     // console.log(somearr)
+//     // const expensedisplaylist = document.getElementById("list-container")
+//     // // aa.map((x)=> expensedisplaylist.append(document.createElement("div").innerText = x.split("*")) )
+//     // // somearr.map((x)=> expensedisplaylist.append(document.createElement("div","hh")))
+//     // somearr.map((x) => {
+//     //     const div = document.createElement("div");
+//     //     div.innerHTML =x;
+//     //     div.classList.add("hh");
+//     //     expensedisplaylist.append(div);
+//     // });
+//     const a = JSON.parse(display_expense)
+//     const expensedisplaylist = document.getElementById("list-container")
+//     console.log(a)
+//     a.map((x)=>{
+//         const div = document.createElement("div");
+//         div.innerHTML =x.expensetype +" " + x.expensevalue;
+//         div.classList.add("hh");
+//         expensedisplaylist.append(div);}
+//     )
+    
+    
+//     const get_budget = document.getElementById("total-amt")
+//     get_budget.value=""
+    
+    
+//     }
+//     function setbudget(){
+//         const get_budget = document.getElementById("total-amt")
+//         const get_budget_value = get_budget.value
+//         console.log(get_budget_value)
+//         localStorage.setItem("total-budget",get_budget_value)
+        
+//         onpageload()
+    
+//     }
+//     function setexpense(){
+//         const get_expensetype = document.getElementById("product-name")
+//         const get_expensevalue = document.getElementById("product-amt")
+//         const get_expensetype_value = get_expensetype.value
+//         const get_expensevalue_value = get_expensevalue.value
+    
+//         const all_expense = {
+//            "expensetype" : get_expensetype_value,
+//            "expensevalue":get_expensevalue_value
+    
+//         }
+        
+//         let getdata_allexpense_local = localStorage.getItem("all-expense") 
+//         // let getdata_allexpense = JSON.parse(getdata_allexpense_local)
+//         // if (!getdata_allexpense){
+//         //     getdata_allexpense =[]
+//         // }
+//         // console.log(typeof(all_expense))
+//         // let obj0 = localStorage.getItem("test") 
+//         // const obj1 = {
+//         //     "1":"a",
+//         //     "2":"b"
+//         // }
+//         // const obj2 = {
+//         //     "11":"a",
+//         //     "22":"b"
+//         // }
+//         // obj0 = {...obj2}
+//         // obj0 = obj0 ? JSON.parse(obj0) : [];
+//         // obj0.push(all_expense);
+//         getdata_allexpense_local = getdata_allexpense_local ? JSON.parse(getdata_allexpense_local) : [];
+//         getdata_allexpense_local.push(all_expense);
+     
+     
+      
+    
+//         localStorage.setItem("all-expense",JSON.stringify(getdata_allexpense_local))
+//         // console.log(getdata_allexpense)
+//         // localStorage.setItem("all-expense",JSON.stringify(getdata_allexpense))
+    
+//         // let get_all_expense = localStorage.getItem("all-expense") 
+//         // if (!get_all_expense){
+//         //     get_all_expense = {}
+//         // }
+//         // get_all_expense =  
+    
+        
+//         // // console.log(get_expensetype_value,get_expensevalue_value)
+//         // // const all_expense = get_all_expense + "["+ get_expensetype_value +","+ get_expensevalue_value+"] || ";
+//         // // // const all_expense = [ get_all_expense ? "["+ get_expensetype_value +","+ get_expensevalue_value+"]" : "["+ get_expensetype_value +","+ get_expensevalue_value+"]" ]
+//         // localStorage.setItem("all-expense",JSON.stringify(get_all_expense))
+        
+        
+//         onpageload()
+    
+//     }
+
+
+
+function onpageload(){
+    const get_display_budget = document.getElementById("bdgt")
+    const get_display_expense = document.getElementById("expns")
+    const get_display_balance = document.getElementById("blnc")
+    
+    const display_budget = localStorage.getItem("total-budget")
+    const display_expense = localStorage.getItem("all-expense")
+    const display_balance = localStorage.getItem("balance")
+    
+    
+    get_display_budget.innerText=display_budget
+    get_display_expense.innerText=display_expense
+    get_display_balance.innerText=display_balance
+    
+    
+    // const aa = display_expense.split("||")
+    // console.log(aa)
+    // const somearr = []
+    // aa.map((x)=>somearr.push(x))
+    // console.log(somearr)
+    // const expensedisplaylist = document.getElementById("list-container")
+    // // aa.map((x)=> expensedisplaylist.append(document.createElement("div").innerText = x.split("*")) )
+    // // somearr.map((x)=> expensedisplaylist.append(document.createElement("div","hh")))
+    // somearr.map((x) => {
+    //     const div = document.createElement("div");
+    //     div.innerHTML =x;
+    //     div.classList.add("hh");
+    //     expensedisplaylist.append(div);
+    // });
+    const a = JSON.parse(display_expense)
+    const expensedisplaylist = document.getElementById("list-container")
+    console.log(a)
+    a.map((x)=>{
+        const div = document.createElement("div");
+        div.innerHTML =x.expensetype +" " + x.expensevalue;
+        div.classList.add("hh");
+        expensedisplaylist.append(div);}
+    )
+    
+    
+    const get_budget = document.getElementById("total-amt")
+    get_budget.value=""
+    
+    
+    }
+    function setbudget(){
+        const get_budget = document.getElementById("total-amt")
+        const get_budget_value = get_budget.value
+        console.log(get_budget_value)
+        localStorage.setItem("total-budget",get_budget_value)
+        
+        onpageload()
+    
+    }
+    function setexpense(){
+        const get_expensetype = document.getElementById("product-name")
+        const get_expensevalue = document.getElementById("product-amt")
+        const get_expensetype_value = get_expensetype.value
+        const get_expensevalue_value = get_expensevalue.value
+    
+        const all_expense = {
+           "expensetype" : get_expensetype_value,
+           "expensevalue":get_expensevalue_value
+    
+        }
+        
+        let getdata_allexpense_local = localStorage.getItem("all-expense") 
+        // let getdata_allexpense = JSON.parse(getdata_allexpense_local)
+        // if (!getdata_allexpense){
+        //     getdata_allexpense =[]
+        // }
+        // console.log(typeof(all_expense))
+        // let obj0 = localStorage.getItem("test") 
+        // const obj1 = {
+        //     "1":"a",
+        //     "2":"b"
+        // }
+        // const obj2 = {
+        //     "11":"a",
+        //     "22":"b"
+        // }
+        // obj0 = {...obj2}
+        // obj0 = obj0 ? JSON.parse(obj0) : [];
+        // obj0.push(all_expense);
+        getdata_allexpense_local = getdata_allexpense_local ? JSON.parse(getdata_allexpense_local) : [];
+        getdata_allexpense_local.push(all_expense);
+     
+     
+      
+    
+        localStorage.setItem("all-expense",JSON.stringify(getdata_allexpense_local))
+        // console.log(getdata_allexpense)
+        // localStorage.setItem("all-expense",JSON.stringify(getdata_allexpense))
+    
+        // let get_all_expense = localStorage.getItem("all-expense") 
+        // if (!get_all_expense){
+        //     get_all_expense = {}
+        // }
+        // get_all_expense =  
+    
+        
+        // // console.log(get_expensetype_value,get_expensevalue_value)
+        // // const all_expense = get_all_expense + "["+ get_expensetype_value +","+ get_expensevalue_value+"] || ";
+        // // // const all_expense = [ get_all_expense ? "["+ get_expensetype_value +","+ get_expensevalue_value+"]" : "["+ get_expensetype_value +","+ get_expensevalue_value+"]" ]
+        // localStorage.setItem("all-expense",JSON.stringify(get_all_expense))
+        
+        
+        onpageload()
+    
+    }
+
+
+
+    // function onpageload(){
+//     const get_display_budget = document.getElementById("bdgt")
+//     const get_display_expense = document.getElementById("expns")
+//     const get_display_balance = document.getElementById("blnc")
+    
+//     const display_budget = localStorage.getItem("total-budget")
+//     const display_expense = localStorage.getItem("all-expense")
+//     const display_balance = localStorage.getItem("balance")
+    
+    
+//     get_display_budget.innerText=display_budget
+//     get_display_expense.innerText=display_expense
+//     get_display_balance.innerText=display_balance
+    
+    
+//     // const aa = display_expense.split("||")
+//     // console.log(aa)
+//     // const somearr = []
+//     // aa.map((x)=>somearr.push(x))
+//     // console.log(somearr)
+//     // const expensedisplaylist = document.getElementById("list-container")
+//     // // aa.map((x)=> expensedisplaylist.append(document.createElement("div").innerText = x.split("*")) )
+//     // // somearr.map((x)=> expensedisplaylist.append(document.createElement("div","hh")))
+//     // somearr.map((x) => {
+//     //     const div = document.createElement("div");
+//     //     div.innerHTML =x;
+//     //     div.classList.add("hh");
+//     //     expensedisplaylist.append(div);
+//     // });
+//     const a = JSON.parse(display_expense)
+//     const expensedisplaylist = document.getElementById("list-container")
+//     console.log(a)
+//     a.map((x)=>{
+//         const div = document.createElement("div");
+//         div.innerHTML =x.expensetype +" " + x.expensevalue;
+        // div.classList.add("hh");
+        // expensedisplaylist.append(div);}
+//     )
+    
+    
+//     const get_budget = document.getElementById("total-amt")
+//     get_budget.value=""
+    
+    
+//     }
+//     function setbudget(){
+//         const get_budget = document.getElementById("total-amt")
+//         const get_budget_value = get_budget.value
+//         console.log(get_budget_value)
+//         localStorage.setItem("total-budget",get_budget_value)
+        
+//         onpageload()
+    
+//     }
+//     function setexpense(){
+//         const get_expensetype = document.getElementById("product-name")
+//         const get_expensevalue = document.getElementById("product-amt")
+//         const get_expensetype_value = get_expensetype.value
+//         const get_expensevalue_value = get_expensevalue.value
+    
+//         const all_expense = {
+//            "expensetype" : get_expensetype_value,
+//            "expensevalue":get_expensevalue_value
+    
+//         }
+        
+//         let getdata_allexpense_local = localStorage.getItem("all-expense") 
+//         // let getdata_allexpense = JSON.parse(getdata_allexpense_local)
+//         // if (!getdata_allexpense){
+//         //     getdata_allexpense =[]
+//         // }
+//         // console.log(typeof(all_expense))
+//         // let obj0 = localStorage.getItem("test") 
+//         // const obj1 = {
+//         //     "1":"a",
+//         //     "2":"b"
+//         // }
+//         // const obj2 = {
+//         //     "11":"a",
+//         //     "22":"b"
+//         // }
+//         // obj0 = {...obj2}
+//         // obj0 = obj0 ? JSON.parse(obj0) : [];
+//         // obj0.push(all_expense);
+//         getdata_allexpense_local = getdata_allexpense_local ? JSON.parse(getdata_allexpense_local) : [];
+//         getdata_allexpense_local.push(all_expense);
+     
+     
+      
+    
+//         localStorage.setItem("all-expense",JSON.stringify(getdata_allexpense_local))
+//         // console.log(getdata_allexpense)
+//         // localStorage.setItem("all-expense",JSON.stringify(getdata_allexpense))
+    
+//         // let get_all_expense = localStorage.getItem("all-expense") 
+//         // if (!get_all_expense){
+//         //     get_all_expense = {}
+//         // }
+//         // get_all_expense =  
+    
+        
+//         // // console.log(get_expensetype_value,get_expensevalue_value)
+//         // // const all_expense = get_all_expense + "["+ get_expensetype_value +","+ get_expensevalue_value+"] || ";
+//         // // // const all_expense = [ get_all_expense ? "["+ get_expensetype_value +","+ get_expensevalue_value+"]" : "["+ get_expensetype_value +","+ get_expensevalue_value+"]" ]
+//         // localStorage.setItem("all-expense",JSON.stringify(get_all_expense))
+        
+        
+//         onpageload()
+    
+//     }
+
+
+function onpageload(){
+    console.log("page loaded")
+    
+    //get budget expenditure balance tags 
+    const display_budget = document.getElementById("display_budget")
+    const display_expenditure = document.getElementById("display_expenditure")
+    const display_balance = document.getElementById("display_balance")
+    
+    //get budget expenditure balance data from local storage
+    const get_budget = localStorage.getItem("budget") || "0"
+    const get_expenditure = localStorage.getItem("expenditure") || "0"
+    const get_balance = get_budget - get_expenditure 
+    
+    //display budget expenditure balance values 
+    display_budget.innerText = get_budget
+    display_expenditure.innerText = get_expenditure
+    display_balance.innerText = get_balance
+    
+    
+    
+    //get all the expense data
+    let get_all_expense = localStorage.getItem("all-expense") 
+    
+    
+    //convert json string to object 
+     get_all_expense = JSON.parse(get_all_expense) || [];
+     console.log(get_all_expense[0])
+    get_all_expense.map((x,index)=>{
+    console.log(index)
+    
+    const create_row = document.createElement("tr");
+    
+    const create_cell1 = document.createElement("td")
+    create_cell1.innerHTML = x.expense_category
+    create_cell1.classList.add("table_row_cell");
+    create_row.append(create_cell1);
+    
+    const create_cell2 = document.createElement("td")
+    create_cell2.innerHTML = x.expense_amount
+    create_cell2.classList.add("table_row_cell");
+    create_row.append(create_cell2);
+    
+    const create_cell3 = document.createElement("td")
+    create_cell3.innerHTML = x.expense_date
+    create_cell3.classList.add("table_row_cell");
+    create_row.append(create_cell3);
+    
+    const create_cell4 = document.createElement("button")
+    create_cell4.innerHTML = "remove"
+    create_cell4.classList.add("table_row_cell");
+    create_row.append(create_cell4);
+    
+    create_cell4.addEventListener("click", () => {
+        
+        create_row.remove();
+     get_all_expense.pop(index)
+        localStorage.setItem("all-expense",JSON.stringify(get_all_expense))
+       
+    });
+        const expenseTableBody = document.getElementById("expense_body");
+        expenseTableBody.append(create_row);
+    
+    })
+    
+    
+    
+    
+    }
+    function setbudget(){
+        const budget_input = document.getElementById("budget_input")
+        console.log(budget_input.value) // get value from input field
+        localStorage.setItem("budget",budget_input.value) // save budget value to local storage
+        budget_input.value=""
+        onpageload()
+    }
+    function setexpenselist(){
+        const category_input = document.getElementById("category_input")
+        const amount_input = document.getElementById("amount_input")
+        const date_input = document.getElementById("date_input")
+        
+        const expense_data = {
+            "expense_category":category_input.value,
+            "expense_amount":amount_input.value,
+            "expense_date":amount_input.value,
+        }
+    
+        let all_expense_data = localStorage.getItem("all-expense")
+        all_expense_data = all_expense_data ? JSON.parse(all_expense_data) : [];  //ternary conditon ? if true use this : if false use this json parse Converts a JavaScript Object Notation (JSON) string into an object.
+        all_expense_data.push(expense_data);
+        
+        localStorage.setItem("all-expense",JSON.stringify(all_expense_data)) //Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
+    
+    
+        console.log(category_input.value)
+        category_input.value=""
+        console.log(amount_input.value)
+        amount_input.value=""
+        console.log(date_input.value)
+        date_input.value=""
+        onpageload()
+    }

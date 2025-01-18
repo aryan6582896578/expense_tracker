@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link href="https://fonts.cdnfonts.com/css/comback-home" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="./index.js"></script>
+    <title>Expense Calculator || Into The Webverse</title>
+  </head>
+  <body onload="onPageLoad()">
+    <div class="container">
+      <p id="title">Expense Tracker</p>
+      <div class="wrapper">
+        <div class="top-wrapper">
+          <div class="budget-balance">
+            <div class="total-budget">
+              <p class="budget-name">Budget:</p>
+              <div class="set-budget">
+                <input
+                  type="number"
+                  class="expense-name"
+                  placeholder="Enter budget"
+                  id="budgetInput"
+                />
+                <button
+                  type="submit"
+                  class="input-btn1"
+                  id="input-btn1"
+                  onclick=setBudget()
+          
+                >
+                  Enter budget
+                </button>
+              </div>
+            </div>
+
+            <div class="budget-display">
+              <div class="budget-show">
+                Budget:
+                <span id="displayBudget"></span>
+              </div>
+              <div class="expenditure">
+                Expenditure: <span id="displayExpenditure"></span>
+                <span id="displayExpenditure"></span>
+              </div>
+
+              <div class="balance">
+                Balance:
+                <span id="displayBalance"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input">
+            <div class="category-wrapper">
+              <div class="category-inner">
+                <div class="category">
+                  <p>Category:</p>
+                </div>
+                <div class="amount">
+                  <p>Amount:</p>
+                </div>
+                <div class="date">
+                  <p id="date">Date:</p>
+                </div>
+              </div>
+              <div class="category-input">
+                <input
+                  type="text"
+                  class="expense-field"
+                  placeholder="Enter name of expense"
+                  id="categoryInput"
+                  class="category"
+                  required
+                />
+                <input
+                  type="number"
+                  class="expense-amt-field"
+                  placeholder="Expense amount"
+                  id="amountInput"
+                  class="amount"
+                  required
+                />
+                <input
+                  type="date"
+               
+                  class="expense-date-field"
+                  placeholder="expense date"
+                  id="dateInput"
+                  class="date"
+                  required
+                />
+                <button
+                  type="submit"
+                  class="input-btn"
+                  id="expenseInput"
+                  onclick=setExpense()
+                >
+                  Enter expense
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expense-list">
+          <h2>&nbsp&nbspExpense List</h2>
+          <div class="table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+
+              <tbody id="expense_body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <img src="./assets/web.png" alt="web" id="web1" />
+      <img src="./assets/web.png" alt="web" id="web2" />
+      <img src="./assets/web.png" alt="web" id="web3" />
+      <img src="./assets/spiderman.png" alt="spiderman" id="spiderman" />
+    </div>
+  </body>
+  <script src="index.js" />
+</html>
