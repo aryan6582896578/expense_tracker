@@ -38,6 +38,7 @@ input {
   padding: 4px;
   min-height: 35px;
   max-width: 200px;
+  margin:12px;
   
 }
 body{
@@ -71,6 +72,7 @@ button:hover {
   top: -26vh;
   left: -16vw;
   z-index: -1;
+  opacity: 80%;
 }
 
 #web2 {
@@ -80,6 +82,7 @@ button:hover {
   right: -12vw;
   overflow-x: hidden;
   z-index: -1;
+  opacity: 80%;
 }
 
 #web3 {
@@ -90,6 +93,7 @@ button:hover {
   right: 30vw;
   overflow-x: hidden;
   z-index: -1;
+  opacity: 80%;
 }
 
 #spiderman {
@@ -101,19 +105,22 @@ button:hover {
 }
 
 .wrapper {
-  margin-left: 23vw;
+  margin-left: 15%;
   margin-top: 1%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   font-size: 1.5rem;
+  background-color: yellow;
+  padding-bottom: 4%;
 }
 
 .top-wrapper {
   display: flex;
   flex-direction: row;
   margin: 4%;
+  background-color: cyan;
  
 }
 
@@ -122,15 +129,19 @@ button:hover {
   display: flex;
   flex-direction: row;
   align-items: top;
+  background-color: green;
 }
 .budget-name {
   margin-top: 12px;
+  background-color: yellow;
 }
 .set-budget {
   display: flex;
   flex-direction: column;
+  background-color: gray;
 }
-.input-btn1 {
+/* enter budget button */
+.input-btn1 { 
   padding: 4px;
   min-height: 30px;
   max-width: 100%;
@@ -144,15 +155,19 @@ button:hover {
 }
 .expense-name {
   margin: 10px;
+  background-color: orange;
 }
 .budget-show {
   margin: 8px;
+  background-color: teal;
 }
 .expenditure {
   margin: 8px;
+  background-color: teal;
 }
 .balance {
   margin: 8px;
+  background-color: teal;
 }
 .budget-display {
   margin: 10px 10px 10px 0px;
@@ -161,6 +176,7 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: start;
+  background-color: pink;
 }
 
 .input {
@@ -169,33 +185,39 @@ button:hover {
   flex-direction: column;
   margin: 0 10px;
   height: max-content;
+  background-color: antiquewhite;
 }
 
 .category-inner {
   display: flex;
   flex-direction: column;
+  background-color: crimson;
 }
 .category-input {
   display: flex;
   flex-direction: column;
+  background-color: coral;
 }
-
+/* imp */
 .category-wrapper {
   display: flex;
   flex-direction: row;
   margin: 0px 10px 10px 10px;
+  background-color: darkmagenta;
+  
 
 }
 
-.category-input input{
+/* .category-input input{ added above in universal input field
     margin: 12px;
-}
+} */
 
 .category,
 .date,
 .amount {
   margin: 10px;
   padding: 5px;
+  background-color: darksalmon;
 }
 
 .input-btn {
@@ -210,12 +232,12 @@ button:hover {
     text-align: center;
     margin: 10px;
 }
-
+/* expense list table */
 .expense-list {
   z-index: 100;
   margin-left: 5vw;
   padding: 10px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 35px 15px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(6px);
@@ -223,12 +245,15 @@ button:hover {
   max-height: 35vh;
   overflow-x: hidden;
   text-shadow: none;
+  background-color: goldenrod;
+  margin-left: 3%;
+  margin-top: 0px;
 }
 
 .table {
   margin: 20px;
 }
-
+/* remove button */
 .expense-list button {
   background-color: #1e5ea3;
   width: 80%;
@@ -246,6 +271,7 @@ button:hover {
   word-wrap: break-word;
   max-width: 130px;
   text-align: left;
+  background-color: darkmagenta;
 }
 
 table {
