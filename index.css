@@ -112,7 +112,6 @@ button:hover {
   align-items: center;
   flex-direction: column;
   font-size: 1.5rem;
-  background-color: yellow;
   padding-bottom: 4%;
 }
 
@@ -120,8 +119,6 @@ button:hover {
   display: flex;
   flex-direction: row;
   margin: 4%;
-  background-color: cyan;
- 
 }
 
 .total-budget {
@@ -129,16 +126,13 @@ button:hover {
   display: flex;
   flex-direction: row;
   align-items: top;
-  background-color: green;
 }
 .budget-name {
   margin-top: 12px;
-  background-color: yellow;
 }
 .set-budget {
   display: flex;
   flex-direction: column;
-  background-color: gray;
 }
 /* enter budget button */
 .input-btn1 { 
@@ -155,19 +149,15 @@ button:hover {
 }
 .expense-name {
   margin: 10px;
-  background-color: orange;
 }
 .budget-show {
   margin: 8px;
-  background-color: teal;
 }
 .expenditure {
   margin: 8px;
-  background-color: teal;
 }
 .balance {
   margin: 8px;
-  background-color: teal;
 }
 .budget-display {
   margin: 10px 10px 10px 0px;
@@ -176,7 +166,6 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  background-color: pink;
 }
 
 .input {
@@ -185,27 +174,21 @@ button:hover {
   flex-direction: column;
   margin: 0 10px;
   height: max-content;
-  background-color: antiquewhite;
 }
 
 .category-inner {
   display: flex;
   flex-direction: column;
-  background-color: crimson;
 }
 .category-input {
   display: flex;
   flex-direction: column;
-  background-color: coral;
 }
 /* imp */
 .category-wrapper {
   display: flex;
   flex-direction: row;
   margin: 0px 10px 10px 10px;
-  background-color: darkmagenta;
-  
-
 }
 
 /* .category-input input{ added above in universal input field
@@ -217,7 +200,6 @@ button:hover {
 .amount {
   margin: 10px;
   padding: 5px;
-  background-color: darksalmon;
 }
 
 .input-btn {
@@ -245,7 +227,6 @@ button:hover {
   max-height: 35vh;
   overflow-x: hidden;
   text-shadow: none;
-  background-color: goldenrod;
   margin-left: 3%;
   margin-top: 0px;
 }
@@ -271,7 +252,6 @@ button:hover {
   word-wrap: break-word;
   max-width: 130px;
   text-align: left;
-  background-color: darkmagenta;
 }
 
 table {
